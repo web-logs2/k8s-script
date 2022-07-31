@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node
+spec:
+  containers:
+    - name: node1
+      image: ansike/ansike:test-docker-node-v1
+      env:
+        - name: ENV
+          value: production
+        - name: port
+          value: "8080"
+        - name: TIMEOUT
+          value: "10000"
+      ports:
+        - containerPort: 8080
+          name: node1
+      readinessProbe:
+        httpGet:
+          # 可以将 port 改为90，查看 pod 的 READY 状态是否一直是0/1
+          # port: 90
+          port: 8080
+          path: /index.html
+        initialDelaySeconds: 1
+        periodSeconds: 3

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node
+spec:
+  containers:
+    - env:
+        - name: ENV
+          value: production
+        - name: port
+          value: "8080"
+        - name: TIMEOUT
+          value: "10000"
+      name: node1
+      image: ansike/ansike:test-docker-node-v1
+      ports:
+        - containerPort: 8080
+          name: node1
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              [
+                "sh",
+                "-c",
+                "echo hello from the poststart handler > /usr/share/message",
+              ]
+        preStop:
+          exec:
+            command: ["sh", "-c", "echo hello from the poststop handler"]
