@@ -1,0 +1,18 @@
+# 定时任务
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mycronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: mypod
+        spec:
+          containers:
+            - name: mycontainer
+              image: perl:slim-buster
+              command: ["sh", "-c", 'perl -Mbignum=bpi -wle "print bpi(80)"; echo job is down']
+          restartPolicy: OnFailure

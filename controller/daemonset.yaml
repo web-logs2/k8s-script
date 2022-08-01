@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemeonset
+  labels:
+    app: daemontset
+spec:
+  selector:
+    matchLabels:
+      app: daemontset
+  template:
+    metadata:
+      labels:
+        app: daemontset
+    spec:
+      containers:
+        - name: my-dae
+          image: ansike/ansike:test-docker-node-v1

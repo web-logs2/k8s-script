@@ -1,0 +1,15 @@
+# 运行任务打印小数点后80位pi
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: myjob
+spec:
+  template:
+    metadata:
+      name: mypod
+    spec:
+      containers:
+        - name: mycontainer
+          image: perl:slim-buster
+          command: ["sh", "-c", 'perl -Mbignum=bpi -wle "print bpi(80)"; echo job is down']
+      restartPolicy: OnFailure

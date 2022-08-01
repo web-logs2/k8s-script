@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: my-app
+          image: ansike/ansike:test-docker-node-v1
+          env:
+            - name: port
+              value: "8090"
+          ports:
+            containerPort: 8090
+          readinessProbe:
+            httpGet:
+              port: 8090
+              path: /
+            initialDelaySeconds: 1
+            periodSeconds: 3

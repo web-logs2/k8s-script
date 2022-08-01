@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+          - name: my-app
+            image: ansike/ansike:test-docker-node-v1
+            env:
+              - name: port
+                value: "8090"
+            ports:
+              - containerPort: 8090
