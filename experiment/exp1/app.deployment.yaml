@@ -26,7 +26,7 @@ spec:
       # - Each init container must complete successfully before the next one starts.
       containers:
         - name: myapp
-          image: ansike/ansike:test-docker-node-v1
+          image: ansike/ansike:test-docker-node-v2
           resources:
             requests:
               cpu: 100m
