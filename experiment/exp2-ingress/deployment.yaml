@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-ingress
+spec:
+  selector:
+    matchLabels:
+      app: app-ingress
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: app-ingress
+    spec:
+      containers:
+        - name: app-ingress
+          image: ansike/ansike:test-docker-node-v2
+          ports:
+            - containerPort: 8080
+          env:
+            - name: port
+              value: "8080"
