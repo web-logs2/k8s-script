@@ -1,6 +1,7 @@
-# 四种存储类型
+# 存储类型
 
 ### configMap
+
 #### 创建方式
 1. 目录方式
 创建一个目录./configmap, 创建属性文件
@@ -68,12 +69,3 @@ env:
 
 还可以直接使用做命令行变量
 command: ["sh", "-c", "env; echo 'port:$(port)'"]
-
-### secret 加密方案
-
-
-### volume
-
-
-### PV PVC
-

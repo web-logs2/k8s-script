@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-hostpath
+spec:
+  containers:
+    - name: pod-volume-empty-container
+      image: ansike/ansike:test-docker-node-v2
+      volumeMounts:
+        - name: empty-volume
+          mountPath: "/etc/volume"
+    - name: pod-volume-empty-busybox
+      image: busybox:1
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - name: empty-volume
+          mountPath: "/etc/busyxxx"
+  volumes:
+    - name: empty-volume
+      hostPath:
+        path: '/data00'
+        type: Directory
