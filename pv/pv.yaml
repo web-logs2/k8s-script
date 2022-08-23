@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-001
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - "ReadWriteMany"
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    path: "/srv/nfs"
+    server: 10.37.156.156
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-002
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    path: "/srv/nfs1"
+    server: 10.37.156.156
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-003
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    path: "/srv/nfs2"
+    server: 10.37.156.156
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-004
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    path: "/srv/nfs3"
+    server: 10.37.156.156

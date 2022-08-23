@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pvc-service
+  labels:
+    app: nginx
+spec:
+  ports:
+    - name: web
+      port: 80
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pvc-statefulset
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  # 因为使用了 headless 的 SVC，需要声明这个serviceName
+  serviceName: "nginx"
+  replicas: 3
+  template:
+    metadata:
+      labels: 
+        app: nginx
+    spec:
+      containers:
+        - name: pvc-container
+          image: nginx:stable-alpine
+          ports: 
+            - name: web
+              containerPort: 80
+          volumeMounts:
+            - name: volume-www
+              mountPath: '/usr/share/nginx/html'
+  volumeClaimTemplates:
+    - metadata:
+        name: volume-www
+      spec: 
+        # 和 pv 中的 accessModes 的值一致才可以
+        accessModes: ["ReadWriteMany"]
+        # 和 pv 中 storageClassName 的值一致才可以
+        storageClassName: "nfs"
+        resources:
+          requests:
+            # 小于等于 pv 中的 capacity.storage 才可以匹配
+            storage: 1Gi
