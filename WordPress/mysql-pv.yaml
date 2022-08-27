@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-mysql-02
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+    - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-mysql
+  nfs:
+    path: "/srv/nfs-mysql02"
+    server: 10.37.156.156
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs-wp
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+    - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-wp
+  nfs:
+    path: "/srv/nfs-wp"
+    server: 10.37.156.156
