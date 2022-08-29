@@ -46,12 +46,13 @@ spec:
         app: wordpress
         tier: frontend
     spec:
+      nodeName: zhouguiyang-devbox
       containers:
       - image: wordpress:4.8-apache
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
-          value: 10.105.168.60
+          value: wordpress-mysql
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:

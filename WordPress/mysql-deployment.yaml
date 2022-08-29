@@ -46,6 +46,7 @@ spec:
         app: wordpress
         tier: mysql
     spec:
+      nodeName: zhouguiyang-devbox
       containers:
       - image: mysql:5.7
         args:
