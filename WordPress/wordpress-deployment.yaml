@@ -46,7 +46,6 @@ spec:
         app: wordpress
         tier: frontend
     spec:
-      nodeName: zhouguiyang-devbox
       containers:
       - image: wordpress:4.8-apache
         name: wordpress

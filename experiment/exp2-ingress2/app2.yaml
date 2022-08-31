@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: app-ingress-2
 spec:
+  nodeName: zhouguiyang-devbox
   selector:
     matchLabels:
       app: app-ingress-2

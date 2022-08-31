@@ -10,7 +10,6 @@ spec:
   selector:
     app: wordpress
     tier: mysql
-  type: LoadBalancer
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -46,7 +45,6 @@ spec:
         app: wordpress
         tier: mysql
     spec:
-      nodeName: zhouguiyang-devbox
       containers:
       - image: mysql:5.7
         args:
