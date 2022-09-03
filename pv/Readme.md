@@ -72,7 +72,7 @@ spec:
 
 Available 可用 还没有任何声明绑定
 Bound 绑定 卷已经被资源绑定
-Released 已释放 声明被删除，还未被重新绑定
+Released 已释放 声明被删除，但还无法重新绑定，需要删除pv中claimRef的声明
 Failed 失败 该卷的自动回收失败
 
 

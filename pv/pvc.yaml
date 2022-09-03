@@ -22,7 +22,7 @@ spec:
       app: nginx
   # 因为使用了 headless 的 SVC，需要声明这个serviceName
   serviceName: "nginx"
-  replicas: 3
+  replicas: 0
   template:
     metadata:
       labels: 
