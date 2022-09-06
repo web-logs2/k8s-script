@@ -1,0 +1,22 @@
+service:
+  type: NodePort               # 由于需要对外暴露服务，所以在此直接采取Nodeport方式
+  nodePort: 30644              # 自定义对外暴露的端口
+
+ingress:
+  enabled: false               # 我这里无需使用ingress，所以直接使用false禁用ingress，如果需要通过域名访问，则参考values.yaml文件进行ingress的自定义修改
+
+metrics-server:
+  enabled: true                # 同理，如果没有预先装过metrics插件，则需要手动开启
+  args:
+  - --kubelet-preferred-address-types=InternalIP
+  - --kubelet-insecure-tls
+
+rbac:
+  create: true
+  clusterRoleMetrics: true
+  clusterReadOnlyRole: true
+  clusterAdminRole: true       # 让 dashboard 的权限够大，这样我们可以方便操作多个 namespace
+
+serviceAccount:
+  create: true
+  name: dashboard-admin        # 自定义账户名称，自动创建，方便用脚本查询登录令牌 

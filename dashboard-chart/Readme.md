@@ -10,23 +10,51 @@ helm pull kubernetes-dashboard/kubernetes-dashboard
 tar -zxvf kubernetes-dashboard-5.10.0.tgz
 ```
 
-2. 修改配置 values.yaml
+2. 创建配置 my-values.yaml
 
-```
-service.type=NodePort
-service.externalPort=80
-protocolHttp=true
+```shell
+cat >my-values.yaml<<EOF
+service:
+  type: NodePort               # 由于需要对外暴露服务，所以在此直接采取Nodeport方式
+  nodePort: 30644              # 自定义对外暴露的端口
+
+ingress:
+  enabled: false               # 我这里无需使用ingress，所以直接使用false禁用ingress，如果需要通过域名访问，则参考values.yaml文件进行ingress的自定义修改
+
+metrics-server:
+  enabled: true                # 同理，如果没有预先装过metrics插件，则需要手动开启
+  args:
+  - --kubelet-preferred-address-types=InternalIP
+  - --kubelet-insecure-tls
+
+rbac:
+  create: true
+  clusterRoleMetrics: true
+  clusterReadOnlyRole: true
+  clusterAdminRole: true       # 让 dashboard 的权限够大，这样我们可以方便操作多个 namespace
+
+serviceAccount:
+  create: true
+  name: dashboard-admin        # 自定义账户名称，自动创建，方便用脚本查询登录令牌
+EOF
+
+# 根据自己的配置进行安装
+helm install -f my-values.yaml --namespace kube-system kubernetes-dashboard .
 ```
 
-3. 绑定关系
+3. 登录
+
+因为是 https 的缘故，需要建议使用火狐浏览器进行访问 https://${ip}:30644
+chrome 需要导入证书较为麻烦
+
+4. 绑定关系
 
 部署好 K8S dashboard 之后，首次登录，通常会在右上角通知面板中出现很多告警：cannot list xxx
 是 rbac 权限问题
-
 可以将服务账户 kubernetes-dashboard 跟 cluster-admin 这个集群管理员权限对象绑定起来
 
 ```shell
-echo >>kubernetes-dashboard-ClusterRoleBinding.yaml<<EOF
+cat >kubernetes-dashboard-ClusterRoleBinding.yaml<<EOF
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -41,6 +69,6 @@ subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard
   namespace: kube-system
-  
+EOF
 kubectl create -f kubernetes-dashboard-ClusterRoleBinding.yaml
 ```
