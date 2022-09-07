@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: root-sa
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: root-clusterrolebinding   #clusterrolebinding的名称
+subjects:                 #被作用者
+- kind: ServiceAccount    #类型
+  name: root-sa      #serviceAccount名称
+  namespace: kube-system  #sa命名空间
+roleRef:     #角色引用
+  kind: ClusterRole   #类型为clusterRole
+  name: cluster-admin   #clust-admin为rbac系统最大权限
+  apiGroup: rbac.authorization.k8s.io

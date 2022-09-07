@@ -47,10 +47,12 @@ helm install -f my-values.yaml --namespace kube-system kubernetes-dashboard .
 因为是 https 的缘故，需要建议使用火狐浏览器进行访问 https://${ip}:30644
 chrome 需要导入证书较为麻烦
 
+调用 `token.sh` 获取页面登录需要的 token
+
 4. 绑定关系
 
-部署好 K8S dashboard 之后，首次登录，通常会在右上角通知面板中出现很多告警：cannot list xxx
-是 rbac 权限问题
+部署好 K8S dashboard 之后，首次登录，可能会在右上角通知面板中出现很多告警：cannot list xxx
+是 rbac 权限问题，说明当前 sa 的用户没有足够的权限去看到所有的内容
 可以将服务账户 kubernetes-dashboard 跟 cluster-admin 这个集群管理员权限对象绑定起来
 
 ```shell
@@ -71,4 +73,12 @@ subjects:
   namespace: kube-system
 EOF
 kubectl create -f kubernetes-dashboard-ClusterRoleBinding.yaml
+```
+
+或者参考文件`new-sa.yaml`文件 创建新的 clusterRole 进行绑定
+
+```shell
+kubectl apply -f new-sa.yaml
+# 获取刚创建的token，在页面上登录
+kubectl describe secret $(kubectl describe sa new-sa-root -nweb |grep Tokens|awk '{print $2}') -nweb
 ```
