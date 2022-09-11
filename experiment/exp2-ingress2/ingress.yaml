@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-exp-1
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
@@ -18,25 +20,25 @@ spec:
               service:
                 name: svc-ingress-1
                 port:
-                  number: 8081
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-exp-2
-spec:
-  # 标识当前ingress指向是nginx的ingress
-  ingressClassName: nginx
-  rules:
-    - host: www.node2.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              # serviceName: svc-ingress-2
-              # servicePort: 8080
-              service:
-                name: svc-ingress-2
-                port:
-                  number: 8082
+                  number: 8080
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-exp-2
+# spec:
+#   # 标识当前ingress指向是nginx的ingress
+#   ingressClassName: nginx
+#   rules:
+#     - host: www.node2.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               # serviceName: svc-ingress-2
+#               # servicePort: 8080
+#               service:
+#                 name: svc-ingress-2
+#                 port:
+#                   number: 8082

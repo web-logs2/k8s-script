@@ -9,7 +9,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ```
 
 ### 单deployment ingress 实验
-1. 一个deployment deployment.yaml
+1. 一个deployment.yaml
 replicas:3
 image: ansike/ansike:test-docker-node-v2
 env: PORT: 8080
