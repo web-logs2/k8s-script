@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: platform-job
+spec:
+  template:
+    metadata:
+      name: platform-job
+    spec:
+      containers:
+        - name: platform-job-container
+          image: hub.byted.org/infcs/platform_web_job:63c4e766a.feat-staticserver.03f11be7.20230118172631544z8.job
+          # command: ["sh","-c","sleep 3600"]
+          env:
+            - name: STATIC_HOST
+              value: http://172.17.31.17:3142
+            - name: STATIC_SERVER_PATH
+              value: /binaries/veManager
+            - name: MYSQL_HOST
+              value: "10.37.156.156"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USERNAME
+              value: webbff
+            - name: MYSQL_PASSWORD
+              value: webbffpw
+            - name: MYSQL_DATABASE
+              value: platform
+
+      restartPolicy: OnFailure
